@@ -482,3 +482,214 @@ There are no results to be displayed.
 
 ---
 
+**Query #36**
+
+    -- Select employee names along with their department names
+    SELECT Employee.name as emp_name,Department.name as dept_name FROM Employee
+    JOIN Department
+    ON Employee.department_id = Department.department_id;
+
+| emp_name    | dept_name |
+| ----------- | --------- |
+| John Doe    | IT        |
+| Bob Brown   | IT        |
+| Grace Kelly | IT        |
+| Jane Smith  | HR        |
+| Charlie P.  | HR        |
+| Alice Blue  | Finance   |
+| Eve Black   | Finance   |
+| David Green | Marketing |
+| Hannah Lee  | Marketing |
+
+---
+**Query #37**
+
+    -- Select project names along with the department names they belong to
+    SELECT Project.name as Project_name,Department.name as dept_name From Project
+    JOIN Department
+    ON Project.department_id = Department.department_id;
+
+| Project_name    | dept_name |
+| --------------- | --------- |
+| Project Alpha   | IT        |
+| Project Gamma   | IT        |
+| Project Theta   | IT        |
+| Project Beta    | HR        |
+| Project Delta   | Finance   |
+| Project Eta     | Finance   |
+| Project Epsilon | Marketing |
+| Project Zeta    | Marketing |
+
+---
+**Query #38**
+
+    -- Select employee names and their corresponding project names
+    SELECT Employee.name as emp_name,Project.name as Project_name FROM Employee
+    JOIN Project
+    ON Employee.department_id = Project.department_id;
+
+| emp_name    | Project_name    |
+| ----------- | --------------- |
+| John Doe    | Project Alpha   |
+| Bob Brown   | Project Alpha   |
+| Grace Kelly | Project Alpha   |
+| Jane Smith  | Project Beta    |
+| Charlie P.  | Project Beta    |
+| John Doe    | Project Gamma   |
+| Bob Brown   | Project Gamma   |
+| Grace Kelly | Project Gamma   |
+| Alice Blue  | Project Delta   |
+| Eve Black   | Project Delta   |
+| David Green | Project Epsilon |
+| Hannah Lee  | Project Epsilon |
+| David Green | Project Zeta    |
+| Hannah Lee  | Project Zeta    |
+| Alice Blue  | Project Eta     |
+| Eve Black   | Project Eta     |
+| John Doe    | Project Theta   |
+| Bob Brown   | Project Theta   |
+| Grace Kelly | Project Theta   |
+
+---
+**Query #39**
+
+    -- Select all Employees and their departments including those wothout a department
+    SELECT Employee.name as emp_name, Department.name as dept_name From Employee
+    LEFT JOIN Department
+    ON Employee.department_id = Department.department_id;
+
+| emp_name    | dept_name |
+| ----------- | --------- |
+| John Doe    | IT        |
+| Bob Brown   | IT        |
+| Grace Kelly | IT        |
+| Jane Smith  | HR        |
+| Charlie P.  | HR        |
+| Alice Blue  | Finance   |
+| Eve Black   | Finance   |
+| David Green | Marketing |
+| Hannah Lee  | Marketing |
+| Frank White |           |
+
+---
+**Query #40**
+
+    -- Select all departments and their employees, including departments without employees
+    SELECT Department.name as dept_name, Employee.name as emp_name FROM Department
+    LEFT JOIN Employee
+    ON Department.department_id = Employee.department_id;
+
+| dept_name | emp_name    |
+| --------- | ----------- |
+| IT        | John Doe    |
+| IT        | Bob Brown   |
+| IT        | Grace Kelly |
+| HR        | Jane Smith  |
+| HR        | Charlie P.  |
+| Finance   | Alice Blue  |
+| Finance   | Eve Black   |
+| Marketing | David Green |
+| Marketing | Hannah Lee  |
+
+---
+**Query #41**
+
+    -- Select employees who are not assigned to any project
+    SELECT Employee.name as emp_name, Project.name as project_name
+    FROM Employee LEFT JOIN Project
+    ON Employee.department_id = Project.department_id
+    WHERE Project.project_id is NULL;
+
+| emp_name    | project_name |
+| ----------- | ------------ |
+| Frank White |              |
+
+---
+**Query #42**
+
+    -- Select employees and the number of projects their department is working on.
+    SELECT Employee.name as emp_name,Project.department_id as dept_id,COUNT(Project.Project_id) as total_projects FROM Employee
+    JOIN Project 
+    ON Employee.department_id = Project.department_id
+    GROUP BY Employee.name,Project.department_id;
+
+| emp_name    | dept_id | total_projects |
+| ----------- | ------- | -------------- |
+| Alice Blue  | 3       | 2              |
+| Bob Brown   | 1       | 3              |
+| Charlie P.  | 2       | 1              |
+| David Green | 4       | 2              |
+| Eve Black   | 3       | 2              |
+| Grace Kelly | 1       | 3              |
+| Hannah Lee  | 4       | 2              |
+| Jane Smith  | 2       | 1              |
+| John Doe    | 1       | 3              |
+
+---
+**Query #43**
+
+    -- Select the departments that have no employees
+    Select Department.department_id as dept_id,Department.name as dept_name,Employee.emp_id as emp_id From Department
+    LEFT JOIN Employee
+    ON Department.department_id = Employee.department_id
+    WHERE Employee.emp_id is NULL ;
+
+There are no results to be displayed.
+
+---
+**Query #44**
+
+    -- Select employee names who share the same department with 'John Doe'
+    SELECT Employee.name as emp_name From Employee 
+    Where Employee.department_id = (
+      SELECT Employee.department_id From Employee 
+      WHERE Employee.name = 'John Doe'
+    ) 
+    And Employee.name <> 'John Doe';
+
+| emp_name    |
+| ----------- |
+| Bob Brown   |
+| Grace Kelly |
+
+---
+**Query #45**
+
+    -- Select the department name with the highest average salary
+    SELECT Department.name as dept_name,AVG(Employee.salary) as average_salary FROM Department
+    RIGHT JOIN Employee 
+    ON Department.department_id = Employee.department_id
+    GROUP BY Department.name
+    ORDER BY average_salary DESC
+    LIMIT 1;
+
+| dept_name | average_salary |
+| --------- | -------------- |
+| IT        | 65000.0        |
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
