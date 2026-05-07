@@ -253,6 +253,27 @@ GROUP BY Department.name
 ORDER BY average_salary DESC
 LIMIT 1;
 
+------------------------------------------------------------------------------
+-- Nested and correlated queries
+------------------------------------------------------------------------------
+
+-- Select the employee with the highest salary
+SELECT Employee.emp_id as emp_id, Employee.name as emp_name,Employee.salary as Highest_salary
+FROM Employee
+ORDER BY Employee.salary DESC
+LIMIT 1;
+
+-- Select employees whose salary is above the average salary
+SELECT Employee.emp_id as emp_id, Employee.name as emp_name, Employee.salary as salary
+FROM Employee
+WHERE Employee.salary > (SELECT AVG(Employee.salary) FROM Employee
+                         );
+
+-- Select the second highest salary from the employee table     
+SELECT salary FROM Employee
+ORDER BY salary DESC
+LIMIT 1 OFFSET 1;
+
 
 
 
