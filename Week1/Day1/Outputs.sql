@@ -669,6 +669,48 @@ There are no results to be displayed.
 
 ---
 
+**Query #46**
+
+    -- Select the employee with the highest salary
+    SELECT Employee.emp_id as emp_id, Employee.name as emp_name,Employee.salary as Highest_salary
+    FROM Employee
+    ORDER BY Employee.salary DESC
+    LIMIT 1;
+
+| emp_id | emp_name  | Highest_salary |
+| ------ | --------- | -------------- |
+| 3      | Bob Brown | 80000.0        |
+
+---
+**Query #47**
+
+    -- Select employees whose salary is above the average salary
+    SELECT Employee.emp_id as emp_id, Employee.name as emp_name, Employee.salary as salary
+    FROM Employee
+    WHERE Employee.salary > (SELECT AVG(Employee.salary) FROM Employee
+                             );
+
+| emp_id | emp_name    | salary  |
+| ------ | ----------- | ------- |
+| 2      | Jane Smith  | 60000.0 |
+| 3      | Bob Brown   | 80000.0 |
+| 6      | David Green | 70000.0 |
+| 9      | Grace Kelly | 65000.0 |
+
+---
+**Query #48**
+
+    -- Select the second highest salary from the employee table     
+    SELECT salary FROM Employee
+    ORDER BY salary DESC
+    LIMIT 1 OFFSET 1;
+
+| salary  |
+| ------- |
+| 70000.0 |
+
+---
+
 
 
 
